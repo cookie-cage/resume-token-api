@@ -1,24 +1,13 @@
 sudo: required
 
-environment:
-  - RELEASE_VERSION=
+language: bash
+
+env:
+  - DOCKER_IMAGE=rezme/resume-token-api
+
 services:
   - docker
 
-before_install:
-  - RELEASE_VERSION=`cat release_version.txt`
-
-install:
-  - docker-compose -f docker-compose.travis.yml build
-
-before_script:
-  - docker tag rezme/resume-token-api:latest rezme/resume-token-api:$RELEASE_VERSION
-
 script:
-  - docker login --username $DOCKER_LOGIN_USERNAME --password $DOCKER_LOGIN_PASSWORD
-  - docker push rezme/resume-token-api:latest
-  - docker push rezme/resume-token-api:$RELEASE_VERSION
-
-after_script:
-  - docker pull rezme/resume-token-api:latest
-  - docker pull rezme/resume-token-api:$RELEASE_VERSION
+  - TAG=`git tag | tail -n1`
+  - ./travis.sh $TAG $DOCKER_IMAGE $DOCKER_HUB_USERNAME $DOCKER_HUB_PASSWORD
