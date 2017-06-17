@@ -11,62 +11,59 @@ router.post('/', function(req, res, next) {
         data: req.body.key
     }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRES_IN });
 
-    let payload = {
-        token: token
-    };
-
-    Token.create(payload, function(err, data){
-        if (err) {
-            req.body = err;
-            return res.status(400).json(err);
-        }
-
-        res.status(201).json(data);
-    });
-
+    Token.create({token: token})
+        .then((data) => {
+            res.status(201).json(data);
+        })
+        .catch((err) => {
+            res.status(400).json(err);
+        });
 });
 
 router.get('/', function(req, res, next) {
-
-    Token.find(function(err, data){
-        res.status(200).json(data);
-    });
-
+    Token.find()
+        .then(function(data){
+            res.status(200).json(data);
+        })
+        .catch(function(err){
+            res.status(500).json(err);
+        });
 });
 
 router.delete('/', function(req, res, next) {
 
-    Token.remove(req.params.id, function(err, data){
-        if(err)
-            return res.status(400).json(err);
-
-        res.status(202).send(data);
-    });
+    Token.remove()
+        .then(function(data){
+            res.status(202).send(data);
+        })
+        .catch(function(err){
+            res.status(400).json(err);
+        });
 });
 
 router.get('/:id', function(req, res, next) {
 
-    Token.findById(req.params.id, function(err, data){
-        if(!data)
-            return res.status(404).send();
-
-        res.status(200).json(data);
-    });
-
+    Token.findById(req.params.id)
+        .then((data) => {
+            res.status(200).json(data);
+        })
+        .catch((err) => {
+            res.status(404).send();
+        });
 });
 
 router.delete('/:id', function(req, res, next) {
 
-    Token.findByIdAndRemove(req.params.id, function(err, data){
-        if(err)
-            return res.status(400).json(err);
+    Token.findByIdAndRemove(req.params.id)
+        .then((data) => {
+            if(!data)
+                return res.status(404).send();
 
-        if(!data)
-            return res.status(404).send();
-
-        res.status(202).send(data);
-    });
+            res.status(202).send(data);
+        })
+        .catch((err) => {
+            res.status(400).json(err);
+        });
 });
-
 
 module.exports = router;
