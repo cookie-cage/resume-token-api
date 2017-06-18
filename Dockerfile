@@ -17,6 +17,7 @@ COPY routes.js routes.js
 COPY README.md README.md
 
 HEALTHCHECK --interval=10s --timeout=3s \
-    CMD curl -f http://localhost/healthcheck || exit 1
+    CMD echo -e "GET /healthcheck HTTP/1.1\n\n" \
+        | nc localhost 80 | grep -qo "HTTP/1.1 200 OK" || exit 1
 
 CMD ["npm", "start"]
