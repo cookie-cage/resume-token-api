@@ -9,11 +9,9 @@ COPY package.json package.json
 RUN npm install
 
 # copy application
-COPY middlewares middlewares
-COPY models models
 COPY resources resources
+COPY schemas schemas
 COPY index.js index.js
-COPY routes.js routes.js
 COPY README.md README.md
 
 HEALTHCHECK --interval=10s --timeout=3s \

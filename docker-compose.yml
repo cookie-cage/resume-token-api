@@ -1,13 +1,15 @@
 version: "3"
 services:
-  mongo:
-    image: mongo:3.4.4
   api:
     image: rezme/resume-token-api
     build:
       context: .
-    env_file: .env
     ports:
-      - 80
-    depends_on:
-      - mongo
+      - 80:80
+    env_file: .env
+    volumes:
+      - ./resources:/opt/app/resources
+      - ./validators:/opt/app/validators
+      - ./index.js:/opt/app/index.js
+      - ./package.json:/opt/app/package.json
+      - ./.env:/opt/app/.env

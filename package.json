@@ -5,10 +5,10 @@
     "start": "node index.js"
   },
   "dependencies": {
+    "ajv": "5.2.0",
     "body-parser": "1.17.1",
     "express": "4.15.2",
-    "jsonwebtoken": "7.4.1",
-    "mongoose": "4.10.5"
+    "jsonwebtoken": "7.4.1"
   },
   "devDependencies": {
     "nodemon": "1.11.0"
