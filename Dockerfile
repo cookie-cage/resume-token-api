@@ -6,6 +6,7 @@ WORKDIR /opt/app
 
 # download dependencies
 COPY package.json package.json
+COPY package-lock.json package-lock.json
 RUN npm install
 
 # copy application
