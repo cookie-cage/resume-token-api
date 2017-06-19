@@ -2,7 +2,9 @@
   "name": "resume-token-api",
   "private": true,
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "watch": "./node_modules/nodemon/bin/nodemon.js index.js",
+    "inspect": "node --inspect index.js"
   },
   "dependencies": {
     "ajv": "5.2.0",
