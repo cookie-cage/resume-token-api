@@ -10,11 +10,17 @@ Token API for resume ecosystem.
 
 ## usage
 
-### run
+### build
 ```shell
-docker-compose up --build
+docker-compose build
 ```
 
+### run
+```shell
+docker-compose up
+```
+
+## API
 ### generate a new token
 ```shell
 curl -XPOST localhost -i -d '{"owner": "<String>"}' -H 'Content-type: application/json'
