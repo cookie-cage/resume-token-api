@@ -9,6 +9,6 @@ services:
     env_file: .env
     volumes:
       - ./resources:/opt/app/resources
+      - ./schemas:/opt/app/schemas
       - ./index.js:/opt/app/index.js
       - ./package.json:/opt/app/package.json
-      - ./.env:/opt/app/.env
