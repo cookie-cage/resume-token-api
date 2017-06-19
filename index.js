@@ -6,6 +6,7 @@ var resources = require('./resources/index.js');
 
 // security
 app.disable('x-powered-by');
+app.disable('etag');
 
 // middlewares
 app.use(bodyParser.json());
