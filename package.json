@@ -1,5 +1,6 @@
 {
   "name": "resume-token-api",
+  "version": "",
   "private": true,
   "scripts": {
     "start": "node index.js",

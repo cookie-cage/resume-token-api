@@ -1,6 +1,7 @@
-'use strict';
+const healthcheck = require('./healthcheck');
+const token = require('./token');
 
 module.exports = {
-    healthcheck: require('./healthcheck'),
-    token: require('./token')
+  healthcheck,
+  token,
 };

@@ -1,10 +1,9 @@
-'use strict';
+const express = require('express');
 
-var express = require('express');
-var router = express.Router();
+const router = express.Router();
 
-router.get('/', function(req, res, next) {
-    res.json({ status: 'OK' });
+router.get('/', (req, res) => {
+  res.json({ status: 'OK' });
 });
 
 module.exports = router;

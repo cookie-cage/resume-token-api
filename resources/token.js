@@ -1,40 +1,41 @@
-'use strict';
+const express = require('express');
 
-var express = require('express');
-var router = express.Router();
-var jwt = require('jsonwebtoken');
-var Ajv = require('ajv');
-var ajv = new Ajv({ allErrors: true });
-var schema = require('../schemas/token.js');
-var validate = ajv.compile(schema);
+const router = express.Router();
+
+const jwt = require('jsonwebtoken');
+const Ajv = require('ajv');
+
+const ajv = new Ajv({ allErrors: true });
+const schema = require('../schemas/token.js');
+
+const validate = ajv.compile(schema);
 
 // generates a new token
-router.post('/', function (req, res, next) {
-    if (!validate(req.body))
-        return res.status(400).json(validate.errors);
+router.post('/', (req, res) => {
+  if (!validate(req.body)) return res.status(400).json(validate.errors);
 
-    let options = {
-        exp: Math.floor(Date.now() / 1000) + process.env.JWT_EXPIRES_IN,
-        iss: req.body.owner
-    };
+  const options = {
+    exp: Math.floor(Date.now() / 1000) + process.env.JWT_EXPIRES_IN,
+    iss: req.body.owner,
+  };
 
-    let token = jwt.sign(options, process.env.JWT_SECRET);
+  const token = jwt.sign(options, process.env.JWT_SECRET);
 
-    res.status(201).json({ token: token });
+  return res.status(201).json({ token });
 });
 
 // validates the given :token
-router.get('/validate/:token', function (req, res, next) {
-    var valid = null;
+router.get('/validate/:token', (req, res) => {
+  let valid = null;
 
-    try {
-        jwt.verify(req.params.token, process.env.JWT_SECRET);
-        valid = true;
-    } catch (err) {
-        valid = false;
-    }
+  try {
+    jwt.verify(req.params.token, process.env.JWT_SECRET);
+    valid = true;
+  } catch (err) {
+    valid = false;
+  }
 
-    res.status(200).json({ valid: valid })
+  res.status(200).json({ valid });
 });
 
 module.exports = router;

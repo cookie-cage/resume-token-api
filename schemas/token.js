@@ -1,14 +1,14 @@
-var schema = {
-    properties: {
-        owner: {
-            type: "string",
-            maxLength: 255,
-            minLength: 3,
-        },
+const schema = {
+  properties: {
+    owner: {
+      type: 'string',
+      maxLength: 255,
+      minLength: 3,
     },
-    required: [
-        "owner"
-    ]
+  },
+  required: [
+    'owner',
+  ],
 };
 
 module.exports = schema;
